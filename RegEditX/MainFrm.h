@@ -38,6 +38,7 @@ public:
 	bool IsAllowModify() const override {
 		return m_AllowModify;
 	}
+	UINT TrackPopupMenu(CMenuHandle menu, int x, int y) override;
 
 	bool CanPaste() const;
 

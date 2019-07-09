@@ -72,6 +72,10 @@ LRESULT CMainFrame::OnTreeContextMenu(int, LPNMHDR, BOOL&) {
 	return 0;
 }
 
+UINT CMainFrame::TrackPopupMenu(CMenuHandle menu, int x, int y) {
+	return (UINT)m_CmdBar.TrackPopupMenu(menu, TPM_LEFTALIGN | TPM_RIGHTBUTTON, x, y);
+}
+
 LRESULT CMainFrame::OnTreeSelectionChanged(int, LPNMHDR nmhdr, BOOL&) {
 	auto item = reinterpret_cast<NMTREEVIEW*>(nmhdr);
 	auto node = reinterpret_cast<TreeNodeBase*>(m_treeview.GetItemData(item->itemNew.hItem));

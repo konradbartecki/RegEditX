@@ -336,6 +336,18 @@ LRESULT CView::OnFindItem(int, LPNMHDR hdr, BOOL &) {
 	return -1;
 }
 
+LRESULT CView::OnRightClick(int, LPNMHDR hdr, BOOL &) {
+	auto lv = (NMITEMACTIVATE*)hdr;
+	CMenu menu;
+	menu.LoadMenuW(IDR_CONTEXT);
+	CPoint pt;
+	::GetCursorPos(&pt);
+	int index = lv->iItem < 0 ? 1 : 2;
+	m_App->TrackPopupMenu(menu.GetSubMenu(index), pt.x, pt.y);
+
+	return 0;
+}
+
 LRESULT CView::OnDoubleClick(int, LPNMHDR nmhdr, BOOL& handled) {
 	auto lv = reinterpret_cast<NMITEMACTIVATE*>(nmhdr);
 	if (m_Items.empty())
@@ -369,6 +381,19 @@ LRESULT CView::OnReturnKey(int, LPNMHDR, BOOL& handled) {
 	else {
 		return OnModifyValue(0, 0, nullptr, handled);
 	}
+	return 0;
+}
+
+LRESULT CView::OnContextMenu(UINT, WPARAM, LPARAM lParam, BOOL &) {
+	CPoint pt{ GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam) };
+	CPoint client(pt);
+	ScreenToClient(&client);
+
+	UINT flags;
+	int index = HitTest(client, &flags);
+	CMenu menu;
+	menu.LoadMenu(IDR_CONTEXT);
+	m_App->TrackPopupMenu(menu.GetSubMenu(index < 0 ? 1 : 2), pt.x, pt.y);
 	return 0;
 }
 
