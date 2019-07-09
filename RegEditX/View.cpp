@@ -436,7 +436,8 @@ LRESULT CView::OnModifyValue(WORD, WORD, HWND, BOOL &) {
 		{
 			CStringValueDlg dlg(m_App->IsAllowModify());
 			dlg.SetName(item.ValueName, true);
-			dlg.SetType(item.ValueType == REG_SZ ? 0 : 1);
+			auto currentType = item.ValueType == REG_SZ ? 0 : 1;
+			dlg.SetType(currentType);
 			WCHAR value[2048];
 			ULONG chars = 2048;
 			auto error = key->QueryStringValue(item.ValueName, value, &chars);
@@ -445,12 +446,15 @@ LRESULT CView::OnModifyValue(WORD, WORD, HWND, BOOL &) {
 				return 0;
 			}
 			dlg.SetValue(value);
-			if (dlg.DoModal() == IDOK && dlg.GetValue() != value) {
-				auto cmd = std::make_shared<ChangeValueCommand<CString>>(m_CurrentNode->GetFullPath(), item.ValueName, dlg.GetValue(), item.ValueType);
+			if (dlg.DoModal() == IDOK && (dlg.GetValue() != value || dlg.GetType() != currentType)) {
+				auto type = dlg.GetType() == 0 ? REG_SZ : REG_EXPAND_SZ;
+				auto cmd = std::make_shared<ChangeValueCommand<CString>>(m_CurrentNode->GetFullPath(), item.ValueName, dlg.GetValue(), type);
 				if (!m_App->AddCommand(cmd))
 					m_App->ShowCommandError(L"Failed to change value");
-				else
+				else {
+					item.ValueType = type;
 					item.ValueSize = (1 + dlg.GetValue().GetLength()) * sizeof(WCHAR);
+				}
 			}
 			break;
 		}
@@ -566,6 +570,14 @@ LRESULT CView::OnNewQwordValue(WORD, WORD, HWND, BOOL &) {
 	return HandleNewIntValue(8);
 }
 
+LRESULT CView::OnNewStringValue(WORD, WORD, HWND, BOOL &) {
+	return HandleNewStringValue(REG_SZ);
+}
+
+LRESULT CView::OnNewExpandStringValue(WORD, WORD, HWND, BOOL &) {
+	return HandleNewStringValue(REG_EXPAND_SZ);
+}
+
 LRESULT CView::OnViewKeys(WORD, WORD, HWND, BOOL&) {
 	m_ViewKeys = !m_ViewKeys;
 	Update(m_CurrentNode, true);
@@ -611,6 +623,33 @@ LRESULT CView::HandleNewIntValue(int size) {
 			ATLASSERT(index >= 0);
 			SelectItem(index);
 		}
+	}
+
+	return 0;
+}
+
+LRESULT CView::HandleNewStringValue(DWORD type) {
+	ATLASSERT(type == REG_SZ || type == REG_EXPAND_SZ);
+
+	CStringValueDlg dlg(true);
+	dlg.SetName(L"", false);
+	dlg.SetType(type == REG_SZ ? 0 : 1);
+	if (dlg.DoModal() == IDOK) {
+		if (m_CurrentNode->FindChild(dlg.GetName())) {
+			m_App->ShowCommandError(L"Value name already exists");
+			return 0;
+		}
+
+		auto cmd = std::make_shared<CreateNewValueCommand<CString>>(m_CurrentNode->GetFullPath(),
+			dlg.GetName(), dlg.GetValue(), dlg.GetType() == 0 ? REG_SZ : REG_EXPAND_SZ);
+		if (!m_App->AddCommand(cmd))
+			m_App->ShowCommandError(L"Failed to create value");
+		else {
+			auto index = FindItem(dlg.GetName(), false, true);
+			ATLASSERT(index >= 0);
+			SelectItem(index);
+		}
+
 	}
 
 	return 0;
