@@ -7,6 +7,7 @@ struct IBufferManager {
 	virtual void SetData(int64_t offset, const uint8_t* data, uint32_t count) = 0;
 	virtual int64_t GetSize() const = 0;
 	virtual uint8_t* GetRawData(int64_t offset) = 0;
+	virtual ~IBufferManager() = default;
 };
 
 struct IHexControl {

@@ -2,7 +2,6 @@
 
 #include "IHexControl.h"
 #include "EditCommandBase.h"
-#include "CommandManager.h"
 
 class CHexControl :
 	public CWindowImpl<CHexControl>,
@@ -10,7 +9,7 @@ class CHexControl :
 public:
 	//	enum { uSCROLL_FLAGS = SW_INVALIDATE };
 
-	DECLARE_WND_CLASS_EX(_T("WTLHexControl"), CS_OWNDC | CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS, COLOR_WINDOW)
+	DECLARE_WND_CLASS_EX(_T("WTLHexControl"), CS_OWNDC | CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS, NULL)
 
 	CHexControl();
 
@@ -30,10 +29,14 @@ public:
 		MESSAGE_HANDLER(WM_VSCROLL, OnVScroll)
 		MESSAGE_HANDLER(WM_HSCROLL, OnHScroll)
 		MESSAGE_HANDLER(WM_MOUSEWHEEL, OnMouseWheel)
-		//MESSAGE_HANDLER(WM_ERASEBKGND, OnEraseBkgnd)
+		MESSAGE_HANDLER(WM_GETDLGCODE, OnGetDialogCode)
+		MESSAGE_HANDLER(WM_CONTEXTMENU, OnContextMenu)
+		MESSAGE_HANDLER(WM_ERASEBKGND, OnEraseBkgnd)
 	END_MSG_MAP()
 
 	// message handlers
+	LRESULT OnGetDialogCode(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/);
+	LRESULT OnContextMenu(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/);
 	LRESULT OnMouseMove(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/);
 	LRESULT OnCreate(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/);
 	LRESULT OnChar(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/);
@@ -64,11 +67,16 @@ public:
 	int32_t GetDataSize() const override;
 	bool SetBytesPerLine(int32_t bytesPerLine) override;
 	int32_t GetBytesPerLine() const override;
-	void SetAddressColor(COLORREF color = CLR_INVALID);
+	void SetOffsetColor(COLORREF color = CLR_INVALID);
 	void SetDataColor(COLORREF color = CLR_INVALID);
 	void SetAsciiColor(COLORREF color = CLR_INVALID);
+	void SetBackColor(COLORREF color = CLR_INVALID);
 	void Copy(int64_t offset = -1, int32_t size = 0);
 	void Paste(int64_t offset = -1);
+	COLORREF GetOffsetColor() const;
+	COLORREF GetDataColor() const;
+	COLORREF GetAsciiColor() const;
+	COLORREF GetBackColor() const;
 
 protected:
 	void RecalcLayout();
@@ -79,6 +87,8 @@ protected:
 	void CommitValue(int64_t offset, uint64_t value);
 	void ResetInput();
 	void UpdateData(EditCommandBase* cmd);
+	void DrawOffset(int64_t offset);
+	void DrawAsciiChar(int64_t offset, uint8_t ch);
 
 	class CommandManager {
 	public:
@@ -104,8 +114,9 @@ private:
 	int m_FontPointSize{ 110 };
 	CRect m_rcAddress, m_rcData, m_rcAscii;
 	COLORREF m_clrAddress{ CLR_INVALID }, m_clrData{ CLR_INVALID }, m_clrAscii{ CLR_INVALID };
+	COLORREF m_clrBack{ CLR_INVALID };
 	int64_t m_SelStart{ -1 }, m_SelLength;
-	int64_t m_StartOffset{ 0 }, m_EndOffset, m_CurrentOffset{ 0 };
+	int64_t m_StartOffset{ 0 }, m_EndOffset, m_CurrentOffset{ -1 };
 	int32_t m_BytesPerLine{ 32 }, m_DataSize{ 1 };
 	uint64_t m_OldValue;
 	int m_Width, m_Height;

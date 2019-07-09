@@ -486,6 +486,7 @@ BEGIN
     ID_FILE_CLOSE           "Close the active document\nClose"
     ID_FILE_SAVE            "Save the active document\nSave"
     ID_FILE_SAVE_AS         "Save the active document with a new name\nSave As"
+	ID_EDIT_MODIFY			"Enable or disable registry modification\nModify Mode"
 END
 
 STRINGTABLE
