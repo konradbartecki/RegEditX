@@ -18,6 +18,7 @@
 extern CAppModule _Module;
 
 #include <atlwin.h>
+#include <atlstr.h>
 
 #include <atlframe.h>
 #include <atlctrls.h>
@@ -25,7 +26,6 @@ extern CAppModule _Module;
 #include <atlctrlw.h>
 #include <atlctrlx.h>
 #include <atlsplit.h>
-#include <atlstr.h>
 #include <strsafe.h>
 #include <atltime.h>
 #include <atlddx.h>

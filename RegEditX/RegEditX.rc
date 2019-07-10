@@ -68,6 +68,8 @@ BEGIN
     BUTTON      ID_NEW_KEY
     SEPARATOR
     BUTTON      ID_EDIT_PROPERTIES
+    SEPARATOR
+    BUTTON      ID_EDIT_NEW
 END
 
 IDR_COMMANDBAR TOOLBAR 16, 16
@@ -219,6 +221,21 @@ BEGIN
         MENUITEM "&Rename\tF2",                 ID_EDIT_RENAME
         MENUITEM SEPARATOR
         MENUITEM "Modify &Value...",            ID_EDIT_MODIFYVALUE
+    END
+END
+
+IDR_NEWVALUE MENU
+BEGIN
+    POPUP "newvalue"
+    BEGIN
+        MENUITEM "&Key",                        ID_NEW_KEY
+        MENUITEM SEPARATOR
+        MENUITEM "&DWORD Value",                ID_NEW_DWORDVALUE
+        MENUITEM "&QWORD Value",                ID_NEW_QWORDVALUE
+        MENUITEM "&String Value",               ID_NEW_STRINGVALUE
+        MENUITEM "&Multiple Strings Value",     ID_NEW_MULTIPLESTRINGSVALUE
+        MENUITEM "&Expand String Value",        ID_NEW_EXPANDSTRINGVALUE
+        MENUITEM "&Binary Value",               ID_NEW_BINARYVALUE
     END
 END
 

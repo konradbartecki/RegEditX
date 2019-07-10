@@ -271,6 +271,7 @@
     <ClInclude Include="Internals.h" />
     <ClInclude Include="RenameValueCommand.h" />
     <ClInclude Include="StringValueDlg.h" />
+    <ClInclude Include="ToolBarHelper.h" />
     <ClInclude Include="UICommon.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="RegHelper.h" />

@@ -6,10 +6,12 @@
 
 #include "RegistryManager.h"
 #include "CommandManager.h"
+#include "ToolBarHelper.h"
 
 class CMainFrame :
 	public CFrameWindowImpl<CMainFrame>,
 	public CUpdateUI<CMainFrame>,
+	public CToolBarHelper<CMainFrame>,
 	public CMessageFilter, 
 	public CIdleHandler,
 	public IMainApp {
@@ -94,6 +96,7 @@ public:
 		CHAIN_MSG_MAP(CUpdateUI<CMainFrame>)
 		CHAIN_MSG_MAP(CFrameWindowImpl<CMainFrame>)
 		CHAIN_MSG_MAP_ALT_MEMBER(m_view, 2)
+		CHAIN_MSG_MAP(CToolBarHelper<CMainFrame>)
 		REFLECT_NOTIFICATIONS()
 	END_MSG_MAP()
 

@@ -176,6 +176,9 @@
     <ClInclude Include="BinaryValueDlg.h">
       <Filter>Dialogs</Filter>
     </ClInclude>
+    <ClInclude Include="ToolBarHelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="RegEditX.rc">

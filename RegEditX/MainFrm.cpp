@@ -158,6 +158,8 @@ LRESULT CMainFrame::OnCreate(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/
 	AddSimpleReBarBand(hWndCmdBar);
 	AddSimpleReBarBand(hWndToolBar, nullptr, TRUE);
 
+	AddToolBarDropDownMenu(hWndToolBar, ID_EDIT_NEW, IDR_NEWVALUE);
+
 	CReBarCtrl rebar(m_hWndToolBar);
 	rebar.LockBands(TRUE);
 
