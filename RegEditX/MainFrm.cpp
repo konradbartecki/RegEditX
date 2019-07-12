@@ -11,6 +11,7 @@
 #include "CreateNewKeyCommand.h"
 #include "NewKeyDlg.h"
 #include "RenameKeyCommand.h"
+#include "SecurityInformation.h"
 
 BOOL CMainFrame::PreTranslateMessage(MSG* pMsg) {
 	if (m_view.PreTranslateMessage(pMsg))
@@ -350,5 +351,15 @@ void CMainFrame::ShowCommandError(PCWSTR message) {
 
 bool CMainFrame::CanPaste() const {
 	return false;
+}
+
+LRESULT CMainFrame::OnEditPermissions(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/) {
+	if (m_SelectedNode == nullptr || m_SelectedNode->GetNodeType() != TreeNodeType::RegistryKey)
+		return 0;
+
+	auto node = static_cast<RegKeyTreeNode*>(m_SelectedNode);
+	CSecurityInformation info(*node->GetKey(), node->GetText(), !m_AllowModify);
+	::EditSecurity(m_hWnd, &info);
+	return 0;
 }
 

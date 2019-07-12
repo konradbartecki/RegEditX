@@ -88,6 +88,7 @@ BEGIN
     BUTTON      ID_NEW_STRINGVALUE
     BUTTON      ID_NEW_DWORDVALUE
     BUTTON      ID_EDIT_PROPERTIES
+	BUTTON      ID_EDIT_PERMISSIONS
 END
 
 
@@ -141,6 +142,8 @@ BEGIN
         END
         MENUITEM SEPARATOR
         MENUITEM "Modify &Value...",            ID_EDIT_MODIFYVALUE
+        MENUITEM SEPARATOR
+        MENUITEM "Permissions...",              ID_EDIT_PERMISSIONS
     END
     POPUP "&View"
     BEGIN
@@ -196,7 +199,7 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "&Rename",                     ID_EDIT_RENAME
         MENUITEM SEPARATOR
-        MENUITEM "&Properties...",              ID_VIEW_PROPERTIES
+        MENUITEM "Permissions...",              ID_EDIT_PERMISSIONS
     END
     POPUP "list"
     BEGIN
