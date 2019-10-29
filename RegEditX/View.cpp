@@ -463,10 +463,10 @@ LRESULT CView::OnModifyValue(WORD, WORD, HWND, BOOL &) {
 			dlg.SetName(item.ValueName, true);
 			auto currentType = item.ValueType == REG_SZ ? 0 : 1;
 			dlg.SetType(currentType);
-			WCHAR value[2048];
+			WCHAR value[2048] = { 0 };
 			ULONG chars = 2048;
 			auto error = key->QueryStringValue(item.ValueName, value, &chars);
-			if (error != ERROR_SUCCESS) {
+			if (error != ERROR_SUCCESS && !item.ValueName.IsEmpty()) {
 				m_App->ShowCommandError(L"Failed to read value");
 				return 0;
 			}
@@ -601,6 +601,48 @@ LRESULT CView::OnNewStringValue(WORD, WORD, HWND, BOOL &) {
 
 LRESULT CView::OnNewExpandStringValue(WORD, WORD, HWND, BOOL &) {
 	return HandleNewStringValue(REG_EXPAND_SZ);
+}
+
+LRESULT CView::OnNewMultiStringValue(WORD, WORD, HWND, BOOL &) {
+	ATLASSERT(m_App->IsAllowModify());
+	CMultiStringValueDlg dlg(true);
+	dlg.SetName(L"", false);
+	if (dlg.DoModal() == IDOK) {
+		auto cmd = std::make_shared<CreateNewValueCommand<CString>>(m_CurrentNode->GetFullPath(),
+			dlg.GetName(), dlg.GetValue(), REG_MULTI_SZ);
+		if (!m_App->AddCommand(cmd))
+			m_App->ShowCommandError(L"Failed to create value");
+		else {
+			auto index = FindItem(dlg.GetName(), false, true);
+			ATLASSERT(index >= 0);
+			SelectItem(index);
+		}
+	}
+
+	return 0;
+}
+
+LRESULT CView::OnNewBinaryValue(WORD, WORD, HWND, BOOL &) {
+	CBinaryValueDlg dlg(true);
+	dlg.SetName(L"", false);
+	InMemoryBuffer buffer;
+	dlg.SetBuffer(&buffer);
+	if (dlg.DoModal() == IDOK) {
+		BinaryValue value;
+		value.Size = buffer.GetSize();
+		value.Buffer = std::make_unique<BYTE[]>(value.Size);
+		buffer.GetData(0, value.Buffer.get(), value.Size);
+		auto cmd = std::make_shared<CreateNewValueCommand<BinaryValue>>(m_CurrentNode->GetFullPath(),
+			dlg.GetName(), value, REG_BINARY);
+		if (!m_App->AddCommand(cmd))
+			m_App->ShowCommandError(L"Failed to create value");
+		else {
+			auto index = FindItem(dlg.GetName(), false, true);
+			ATLASSERT(index >= 0);
+			SelectItem(index);
+		}
+	}
+	return 0;
 }
 
 LRESULT CView::OnViewKeys(WORD, WORD, HWND, BOOL&) {
