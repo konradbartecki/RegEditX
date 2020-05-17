@@ -232,6 +232,7 @@
     <ClCompile Include="MultiStringValueDlg.cpp" />
     <ClCompile Include="RenameValueCommand.cpp" />
     <ClCompile Include="SecurityInformation.cpp" />
+    <ClCompile Include="SortHelper.cpp" />
     <ClCompile Include="StringValueDlg.cpp" />
     <ClCompile Include="FormatHelper.cpp" />
     <ClCompile Include="IntValueDlg.cpp" />

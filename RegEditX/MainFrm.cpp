@@ -365,6 +365,7 @@ LRESULT CMainFrame::OnEditPermissions(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /
 	auto node = static_cast<RegKeyTreeNode*>(m_SelectedNode);
 	CSecurityInformation info(*node->GetKey(), node->GetText(), !m_AllowModify);
 	::EditSecurity(m_hWnd, &info);
+
 	return 0;
 }
 

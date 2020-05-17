@@ -15,6 +15,8 @@
 #include "MultiStringValueDlg.h"
 #include "CreateNewValueCommand.h"
 #include "BinaryValueDlg.h"
+#include <algorithm>
+#include "SortHelper.h"
 
 #pragma comment(lib, "ntdll")
 
@@ -257,27 +259,15 @@ void CView::GoToItem(ListItem& item) {
 }
 
 CString CView::GetColumnText(HWND hWnd, int row, int column) const {
-	const auto& data = GetItem(row);
+	auto& data = GetItem(row);
 	CString text;
 
 	switch (column) {
 		case 0:	// name
-			if (data.TreeNode) {
-				if (data.UpDir)
-					return L"..";
-				else
-					return data.TreeNode->GetText();
-			}
-			else
-				return *data.ValueName == L'\0' ? L"(Default)" : data.ValueName;
-			break;
+			return data.GetName();
 
 		case 1:	// type
-			if (data.TreeNode)
-				return L"Key";
-			else {
-				return GetRegTypeAsString(data.ValueType);
-			}
+			return data.GetType();
 
 		case 2:	// size
 			if (data.TreeNode == nullptr) {
@@ -311,6 +301,20 @@ int CView::GetRowImage(HWND hWnd, int row) const {
 		return data.UpDir ? 5 : 0;
 
 	return GetRegTypeIcon(data.ValueType);
+}
+
+void CView::DoSort(const SortInfo* si) {
+	if (si == nullptr)
+		return;
+
+	std::sort(m_Items.begin(), m_Items.end(), [si](const auto& i1, const auto& i2) {
+		return CompareItems(i1, i2, si->SortColumn, si->SortAscending);
+		});
+	RedrawItems(GetTopIndex(), GetTopIndex() + GetCountPerPage());
+}
+
+bool CView::IsSortable(int col) const {
+	return col != 3 && col != 4;
 }
 
 LRESULT CView::OnFindItem(int, LPNMHDR hdr, BOOL&) {
@@ -713,4 +717,38 @@ LRESULT CView::HandleNewStringValue(DWORD type) {
 	}
 
 	return 0;
+}
+
+bool CView::CompareItems(const ListItem& i1, const ListItem& i2, int col, bool asc) {
+	switch (col) {
+		case 0: return SortHelper::SortStrings(i1.GetName(), i2.GetName(), asc);
+		case 1: return SortHelper::SortStrings(i1.GetType(), i2.GetType(), asc);
+		case 2: return SortHelper::SortNumbers(i1.ValueSize, i2.ValueSize, asc);
+		case 5: return SortHelper::SortNumbers(i1.LastWriteTime.QuadPart, i2.LastWriteTime.QuadPart, asc);
+	}
+	return false;
+}
+
+const CString& ListItem::GetName() const {
+	if (Name.IsEmpty()) {
+		if (TreeNode) {
+			if (UpDir)
+				Name = L"..";
+			else
+				Name = TreeNode->GetText();
+		}
+		else
+			Name = *ValueName == L'\0' ? L"(Default)" : ValueName;
+	}
+	return Name;
+}
+
+const CString& ListItem::GetType() const {
+	if (Type.IsEmpty()) {
+		if (TreeNode)
+			Type = L"Key";
+		else
+			Type = CView::GetRegTypeAsString(ValueType);
+	}
+	return Type;
 }

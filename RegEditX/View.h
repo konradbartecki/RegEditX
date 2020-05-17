@@ -12,10 +12,14 @@ struct ITreeOperations;
 struct IMainApp;
 
 struct ListItem {
+	const CString& GetName() const;
+	const CString& GetType() const;
+
 	TreeNodeBase* TreeNode{ nullptr };
 	CString ValueName;
-	DWORD ValueType, ValueSize;
+	DWORD ValueType, ValueSize = 0;
 	LARGE_INTEGER LastWriteTime = { 0 };
+	mutable CString Name, Type;
 	bool UpDir{ false };
 };
 
@@ -42,6 +46,8 @@ public:
 
 	CString GetColumnText(HWND hWnd, int row, int column) const;
 	int GetRowImage(HWND hWnd, int row) const;
+	void DoSort(const SortInfo* si);
+	bool IsSortable(int col) const;
 
 	BEGIN_MSG_MAP(CView)
 		MESSAGE_HANDLER(WM_CREATE, OnCreate)
@@ -96,6 +102,8 @@ private:
 	//	LRESULT MessageHandler(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/)
 	//	LRESULT CommandHandler(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
 	//	LRESULT NotifyHandler(int /*idCtrl*/, LPNMHDR /*pnmh*/, BOOL& /*bHandled*/)
+
+	static bool CompareItems(const ListItem& i1, const ListItem& i2, int col, bool asc);
 
 private:
 

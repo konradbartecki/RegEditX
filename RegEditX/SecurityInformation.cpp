@@ -6,7 +6,7 @@
 CSecurityInformation::~CSecurityInformation() {
 }
 
-STDMETHODIMP CSecurityInformation::QueryInterface(_In_ REFIID riid, _Outptr_ void **ppvObj) {
+STDMETHODIMP CSecurityInformation::QueryInterface(REFIID riid, void **ppvObj) {
 	if(riid == IID_IUnknown || riid == IID_ISecurityInformation)
 		return *ppvObj = this, S_OK;
 	return E_NOINTERFACE;
@@ -24,11 +24,10 @@ STDMETHODIMP CSecurityInformation::GetObjectInformation(PSI_OBJECT_INFO pInfo) {
 STDMETHODIMP CSecurityInformation::GetAccessRights(const GUID* pguidObjectType,
 	DWORD dwFlags, PSI_ACCESS *ppAccess, ULONG *pcAccesses, ULONG *piDefaultAccess) {
 	static SI_ACCESS access [] = {
-		{ &GUID_NULL, KEY_CREATE_SUB_KEY, L"Create", SI_ACCESS_GENERAL },
-		{ &GUID_NULL, KEY_ENUMERATE_SUB_KEYS, L"Enumerate", SI_ACCESS_GENERAL },
+		{ &GUID_NULL, KEY_CREATE_SUB_KEY, L"Create", SI_ACCESS_SPECIFIC },
+		{ &GUID_NULL, KEY_ENUMERATE_SUB_KEYS, L"Enumerate", SI_ACCESS_SPECIFIC },
 		{ &GUID_NULL, KEY_WRITE, L"Write", SI_ACCESS_GENERAL },
 		{ &GUID_NULL, KEY_READ, L"Read", SI_ACCESS_GENERAL },
-		{ &GUID_NULL, SYNCHRONIZE, L"Synchronize", SI_ACCESS_GENERAL }
 	};
 
 	*ppAccess = access;
