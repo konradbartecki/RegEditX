@@ -284,19 +284,36 @@
     <ClInclude Include="TreeNode.h" />
     <ClInclude Include="TreeNodes.h" />
     <ClInclude Include="View.h" />
+    <ClInclude Include="VirtualListView.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="RegEditX.rc" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\binary.ico" />
-    <Image Include="res\commandbar.bmp" />
+    <Image Include="res\button-help.ico" />
+    <Image Include="res\button-refresh.ico" />
+    <Image Include="res\clipboard-copy.ico" />
+    <Image Include="res\clipboard-cut.ico" />
+    <Image Include="res\clipboard-paste.ico" />
+    <Image Include="res\command-redo-2.ico" />
+    <Image Include="res\command-undo-2.ico" />
+    <Image Include="res\folder-filled-new.ico" />
+    <Image Include="res\folder-filled.ico" />
+    <Image Include="res\folder-open-filled.ico" />
     <Image Include="res\folder-open.ico" />
     <Image Include="res\folder.ico" />
+    <Image Include="res\format-text.ico" />
     <Image Include="res\hive.ico" />
+    <Image Include="res\laptop.ico" />
+    <Image Include="res\padlock-round-filled.ico" />
+    <Image Include="res\properties-filled.ico" />
     <Image Include="res\RegEditX.ico" />
+    <Image Include="res\rename.ico" />
+    <Image Include="res\security-edit-filled.ico" />
+    <Image Include="res\symbol-delete.ico" />
     <Image Include="res\text.ico" />
-    <Image Include="res\toolbar.bmp" />
+    <Image Include="res\type-binary.ico" />
     <Image Include="res\up.ico" />
   </ItemGroup>
   <ItemGroup>

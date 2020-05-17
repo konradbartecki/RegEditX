@@ -46,64 +46,6 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// Toolbar
-//
-
-IDR_MAINFRAME TOOLBAR 24, 24
-BEGIN
-    BUTTON      ID_EDIT_MODIFY
-    SEPARATOR
-    BUTTON      ID_EDIT_COPY
-    BUTTON      ID_EDIT_CUT
-    BUTTON      ID_EDIT_PASTE
-    BUTTON      ID_EDIT_DELETE
-    SEPARATOR
-    BUTTON      ID_EDIT_UNDO
-    BUTTON      ID_EDIT_REDO
-    SEPARATOR
-    BUTTON      ID_EDIT_RENAME
-    SEPARATOR
-    BUTTON      ID_VIEW_REFRESH
-    SEPARATOR
-    BUTTON      ID_NEW_KEY
-    SEPARATOR
-    BUTTON      ID_EDIT_PROPERTIES
-    SEPARATOR
-    BUTTON      ID_EDIT_NEW
-END
-
-IDR_COMMANDBAR TOOLBAR 16, 16
-BEGIN
-    BUTTON      ID_APP_ABOUT
-    BUTTON      ID_EDIT_COPY
-    BUTTON      ID_EDIT_CUT
-    BUTTON      ID_EDIT_PASTE
-    BUTTON      ID_EDIT_DELETE
-    BUTTON      ID_EDIT_RENAME
-    BUTTON      ID_NEW_KEY
-    BUTTON      ID_EDIT_UNDO
-    BUTTON      ID_EDIT_REDO
-    BUTTON      ID_VIEW_REFRESH
-    BUTTON      ID_NEW_BINARYVALUE
-    BUTTON      ID_NEW_STRINGVALUE
-    BUTTON      ID_NEW_DWORDVALUE
-    BUTTON      ID_EDIT_PROPERTIES
-	BUTTON      ID_EDIT_PERMISSIONS
-END
-
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// Bitmap
-//
-
-IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
-
-IDR_COMMANDBAR          BITMAP                  "res\\commandbar.bmp"
-
-
-/////////////////////////////////////////////////////////////////////////////
-//
 // Menu
 //
 
@@ -112,6 +54,8 @@ BEGIN
     POPUP "&File"
     BEGIN
         MENUITEM "&Export...",                  ID_FILE_EXPORT
+        MENUITEM SEPARATOR
+        MENUITEM "&Connect To Computer...",     ID_FILE_CONNECTTOCOMPUTER
         MENUITEM SEPARATOR
         MENUITEM "E&xit",                       ID_APP_EXIT
     END
@@ -252,17 +196,45 @@ END
 // remains consistent on all systems.
 IDR_MAINFRAME           ICON                    "res\\RegEditX.ico"
 
-IDI_FOLDER              ICON                    "res\\folder.ico"
-
-IDI_FOLDER_OPEN         ICON                    "res\\folder-open.ico"
-
-IDI_BINARY              ICON                    "res\\binary.ico"
-
-IDI_TEXT                ICON                    "res\\text.ico"
-
 IDI_HIVE                ICON                    "res\\hive.ico"
 
 IDI_UP                  ICON                    "res\\up.ico"
+
+IDI_LAPTOP              ICON                    "res\\laptop.ico"
+
+IDI_ABOUT               ICON                    "res\\button-help.ico"
+
+IDI_REFRESH             ICON                    "res\\button-refresh.ico"
+
+IDI_COPY                ICON                    "res\\clipboard-copy.ico"
+
+IDI_CUT                 ICON                    "res\\clipboard-cut.ico"
+
+IDI_REDO                ICON                    "res\\command-redo-2.ico"
+
+IDI_UNDO                ICON                    "res\\command-undo-2.ico"
+
+IDI_FOLDER_CLOSED       ICON                    "res\\folder-filled.ico"
+
+IDI_FOLDER_NEW          ICON                    "res\\folder-filled-new.ico"
+
+IDI_FOLDER_OPEN         ICON                    "res\\folder-open-filled.ico"
+
+IDI_TEXT                ICON                    "res\\format-text.ico"
+
+IDI_LOCK                ICON                    "res\\padlock-round-filled.ico"
+
+IDI_PROPERTIES          ICON                    "res\\properties-filled.ico"
+
+IDI_RENAME              ICON                    "res\\rename.ico"
+
+IDI_BINARY              ICON                    "res\\type-binary.ico"
+
+IDI_PASTE               ICON                    "res\\clipboard-paste.ico"
+
+IDI_DELETE              ICON                    "res\\symbol-delete.ico"
+
+IDI_SECURITY            ICON                    "res\\security-edit-filled.ico"
 
 
 /////////////////////////////////////////////////////////////////////////////

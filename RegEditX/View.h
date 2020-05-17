@@ -5,6 +5,7 @@
 #pragma once
 
 #include "resource.h"
+#include "VirtualListView.h"
 
 struct TreeNodeBase;
 struct ITreeOperations;
@@ -18,7 +19,9 @@ struct ListItem {
 	bool UpDir{ false };
 };
 
-class CView : public CWindowImpl<CView, CListViewCtrl> {
+class CView : 
+	public CWindowImpl<CView, CListViewCtrl>,
+	public CVirtualListView<CView> {
 public:
 	DECLARE_WND_SUPERCLASS(nullptr, CListViewCtrl::GetWndClassName())
 
@@ -26,7 +29,7 @@ public:
 	static PCWSTR GetRegTypeAsString(DWORD type);
 	static int GetRegTypeIcon(DWORD type);
 	static CString GetKeyDetails(TreeNodeBase*);
-	CString GetDataAsString(const ListItem& item);
+	CString GetDataAsString(const ListItem& item) const;
 	bool CanDeleteSelected() const;
 	bool CanEditValue() const;
 	ListItem& GetItem(int index);
@@ -37,16 +40,19 @@ public:
 	void Init(ITreeOperations*, IMainApp*);
 	void GoToItem(ListItem& item);
 
+	CString GetColumnText(HWND hWnd, int row, int column) const;
+	int GetRowImage(HWND hWnd, int row) const;
+
 	BEGIN_MSG_MAP(CView)
 		MESSAGE_HANDLER(WM_CREATE, OnCreate)
 		MESSAGE_HANDLER(WM_CONTEXTMENU, OnContextMenu)
-		REFLECTED_NOTIFY_CODE_HANDLER(LVN_GETDISPINFO, OnGetDispInfo)
-		REFLECTED_NOTIFY_CODE_HANDLER(LVN_ODFINDITEM, OnFindItem)
+		//REFLECTED_NOTIFY_CODE_HANDLER(LVN_ODFINDITEM, OnFindItem)
 		REFLECTED_NOTIFY_CODE_HANDLER(NM_DBLCLK, OnDoubleClick)
 		REFLECTED_NOTIFY_CODE_HANDLER(NM_RETURN, OnReturnKey)
 		REFLECTED_NOTIFY_CODE_HANDLER(NM_RCLICK, OnRightClick)
 		REFLECTED_NOTIFY_CODE_HANDLER(LVN_BEGINLABELEDIT, OnBeginRename)
 		REFLECTED_NOTIFY_CODE_HANDLER(LVN_ENDLABELEDIT, OnEndRename)
+		CHAIN_MSG_MAP_ALT(CVirtualListView<CView>, 1)
 		DEFAULT_REFLECTION_HANDLER()
 	ALT_MSG_MAP(1)
 		COMMAND_ID_HANDLER(ID_EDIT_DELETE, OnDelete)
@@ -63,7 +69,6 @@ public:
 	END_MSG_MAP()
 
 private:
-	LRESULT OnGetDispInfo(int /*idCtrl*/, LPNMHDR /*pnmh*/, BOOL& /*bHandled*/);
 	LRESULT OnFindItem(int /*idCtrl*/, LPNMHDR /*pnmh*/, BOOL& /*bHandled*/);
 	LRESULT OnRightClick(int /*idCtrl*/, LPNMHDR /*pnmh*/, BOOL& /*bHandled*/);
 	LRESULT OnDoubleClick(int /*idCtrl*/, LPNMHDR /*pnmh*/, BOOL& /*bHandled*/);
