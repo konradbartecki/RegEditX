@@ -33,6 +33,15 @@
 #define IDI_PASTE                       235
 #define IDI_DELETE                      236
 #define IDI_SECURITY                    237
+#define IDI_CANCEL                      238
+#define IDI_OK                          239
+#define IDI_DETAILS                     240
+#define IDI_LARGE_ICONS                 241
+#define IDI_LIST                        242
+#define IDI_TILES                       243
+#define IDI_VIEW                        244
+#define IDI_ICON1                       245
+#define IDI_ADD                         245
 #define IDC_NAME                        1000
 #define IDC_VALUE                       1001
 #define IDC_HEX                         1002
@@ -73,7 +82,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        238
+#define _APS_NEXT_RESOURCE_VALUE        246
 #define _APS_NEXT_COMMAND_VALUE         32801
 #define _APS_NEXT_CONTROL_VALUE         1012
 #define _APS_NEXT_SYMED_VALUE           101

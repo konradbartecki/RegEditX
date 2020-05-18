@@ -99,6 +99,9 @@
     <ClCompile Include="SortHelper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DialogHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -191,6 +194,9 @@
     <ClInclude Include="VirtualListView.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DialogHelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="RegEditX.rc">
@@ -271,6 +277,30 @@
       <Filter>Resource Files\Icons</Filter>
     </Image>
     <Image Include="res\security-edit-filled.ico">
+      <Filter>Resource Files\Icons</Filter>
+    </Image>
+    <Image Include="res\view_details.ico">
+      <Filter>Resource Files\Icons</Filter>
+    </Image>
+    <Image Include="res\view_large_icons.ico">
+      <Filter>Resource Files\Icons</Filter>
+    </Image>
+    <Image Include="res\view_list.ico">
+      <Filter>Resource Files\Icons</Filter>
+    </Image>
+    <Image Include="res\view_small_icons.ico">
+      <Filter>Resource Files\Icons</Filter>
+    </Image>
+    <Image Include="res\ok.ico">
+      <Filter>Resource Files\Icons</Filter>
+    </Image>
+    <Image Include="res\delete.ico">
+      <Filter>Resource Files\Icons</Filter>
+    </Image>
+    <Image Include="res\view.ico">
+      <Filter>Resource Files\Icons</Filter>
+    </Image>
+    <Image Include="res\button-add.ico">
       <Filter>Resource Files\Icons</Filter>
     </Image>
   </ItemGroup>

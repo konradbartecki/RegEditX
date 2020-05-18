@@ -43,7 +43,7 @@ void CMainFrame::UpdateUI() {
 	UISetText(ID_EDIT_UNDO, (m_CmdMgr.CanUndo() ? L"Undo " + m_CmdMgr.GetUndoCommand()->GetName() : L"Undo") + CString(L"\tCtrl+Z"));
 	UISetText(ID_EDIT_REDO, (m_CmdMgr.CanRedo() ? L"Redo " + m_CmdMgr.GetRedoCommand()->GetName() : L"Redo") + CString(L"\tCtrl+Y"));
 	UIEnable(ID_EDIT_RENAME, m_AllowModify && canDelete);
-	UISetCheck(ID_EDIT_MODIFY, m_AllowModify);
+	UISetCheck(ID_EDIT_MODIFY, !m_AllowModify);
 	UISetCheck(ID_VIEW_KEYSINLISTVIEW, m_view.IsViewKeys());
 	for(int id = ID_NEW_DWORDVALUE; id <= ID_NEW_BINARYVALUE; id++)
 		UIEnable(id, m_AllowModify);
@@ -164,8 +164,6 @@ LRESULT CMainFrame::OnCreate(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/
 	AddSimpleReBarBand(hWndCmdBar);
 	AddSimpleReBarBand(hWndToolBar, nullptr, TRUE);
 
-//	AddToolBarDropDownMenu(hWndToolBar, ID_EDIT_NEW, IDR_NEWVALUE);
-
 	CReBarCtrl rebar(m_hWndToolBar);
 	rebar.LockBands(TRUE);
 
@@ -196,6 +194,7 @@ LRESULT CMainFrame::OnCreate(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/
 	UISetCheck(ID_VIEW_STATUS_BAR, 1);
 	UISetCheck(ID_VIEW_TREEPANE, 1);
 	UISetCheck(ID_VIEW_KEYSINLISTVIEW, 1);
+	UISetRadioMenuItem(ID_VIEW_TYPE_DETAILS, ID_VIEW_TYPE_DETAILS, ID_VIEW_TYPE_TILES);
 
 	// register object for message filtering and idle updates
 	CMessageLoop* pLoop = _Module.GetMessageLoop();
@@ -337,6 +336,7 @@ LRESULT CMainFrame::OnDelete(WORD, WORD, HWND, BOOL&) {
 
 LRESULT CMainFrame::OnEditModify(WORD, WORD, HWND, BOOL&) {
 	m_AllowModify = !m_AllowModify;
+	UISetCheck(ID_EDIT_MODIFY, !m_AllowModify);
 
 	return 0;
 }
@@ -386,10 +386,16 @@ void CMainFrame::InitCommandBar() {
 		{ ID_EDIT_CUT, IDI_CUT },
 		{ ID_EDIT_PASTE, IDI_PASTE },
 		{ ID_EDIT_DELETE, IDI_DELETE },
+		{ ID_EDIT_RENAME, IDI_RENAME },
+		{ ID_VIEW_TYPE_DETAILS, IDI_DETAILS },
+		{ ID_VIEW_TYPE_LIST, IDI_LIST },
+		{ ID_VIEW_TYPE_TILES, IDI_TILES },
+		{ ID_VIEW_TYPE_ICONS, IDI_LARGE_ICONS },
 	};
 	for (const auto& cmd : cmds) {
 		m_CmdBar.AddIcon(cmd.icon ? AtlLoadIcon(cmd.icon) : cmd.hIcon, cmd.id);
 	}
+
 }
 
 void CMainFrame::InitToolBar(CToolBarCtrl& tb) {
@@ -411,6 +417,10 @@ void CMainFrame::InitToolBar(CToolBarCtrl& tb) {
 		{ ID_EDIT_CUT, IDI_CUT },
 		{ ID_EDIT_PASTE, IDI_PASTE },
 		{ ID_EDIT_DELETE, IDI_DELETE },
+		{ 0 },
+		{ 101, IDI_ADD, BTNS_BUTTON | BTNS_SHOWTEXT, L"New" },
+		{ 0 },
+		{ 100, IDI_VIEW, BTNS_BUTTON | BTNS_SHOWTEXT, L"View" },
 	};
 	for (auto& b : buttons) {
 		if (b.id == 0)
@@ -420,4 +430,6 @@ void CMainFrame::InitToolBar(CToolBarCtrl& tb) {
 			tb.AddButton(b.id, b.style, TBSTATE_ENABLED, image, b.text, 0);
 		}
 	}
+	AddToolBarDropDownMenu(tb, 101, IDR_NEWVALUE);
+	AddToolBarDropDownMenu(tb, 100, IDR_CONTEXT, 3);
 }

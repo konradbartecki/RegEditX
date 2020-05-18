@@ -194,8 +194,9 @@ void CView::Update(TreeNodeBase* node, bool ifTheSame) {
 	}
 
 	m_Items.reserve(nodes.size() + 64);
-	auto buffer = std::make_unique<BYTE[]>(1 << 12);
-	auto info = reinterpret_cast<KEY_FULL_INFORMATION*>(buffer.get());
+	BYTE buffer[1 << 12];
+
+	auto info = reinterpret_cast<KEY_FULL_INFORMATION*>(buffer);
 	if (m_ViewKeys) {
 		for (auto& node : nodes) {
 			ListItem item;
@@ -205,7 +206,7 @@ void CView::Update(TreeNodeBase* node, bool ifTheSame) {
 				auto key = trueNode->GetKey();
 				if (key) {
 					ULONG len;
-					auto status = ::NtQueryKey(key->m_hKey, KeyFullInformation, info, 1 << 12, &len);
+					auto status = ::NtQueryKey(key->m_hKey, KeyFullInformation, info, sizeof(buffer), &len);
 					if (NT_SUCCESS(status))
 						item.LastWriteTime = info->LastWriteTime;
 				}
@@ -244,10 +245,11 @@ void CView::Update(TreeNodeBase* node, bool ifTheSame) {
 		}
 	}
 	int count = static_cast<int>(m_Items.size());
-	SetItemCount(count);
+	SetItemCountEx(count, ifTheSame ? (LVSICF_NOSCROLL | LVSICF_NOINVALIDATEALL) : 0);
 	RedrawItems(0, min(count, GetCountPerPage()));
-	if (ifTheSame && currentSelected >= 0)
-		SelectItem(currentSelected);
+	DoSort(GetSortInfo());
+	//if (ifTheSame && currentSelected >= 0)
+	//	SelectItem(currentSelected);
 }
 
 void CView::Init(ITreeOperations* to, IMainApp* app) {
@@ -367,7 +369,7 @@ LRESULT CView::OnDoubleClick(int, LPNMHDR nmhdr, BOOL& handled) {
 
 LRESULT CView::OnReturnKey(int, LPNMHDR, BOOL& handled) {
 	int selected = GetSelectedIndex();
-	auto& item = GetItem(selected);
+	const auto& item = GetItem(selected);
 	if (item.TreeNode) {
 		if (item.UpDir)
 			m_TreeOperations->SelectNode(m_CurrentNode->GetParent(), nullptr);
@@ -662,6 +664,7 @@ LRESULT CView::OnChangeViewType(WORD, WORD id, HWND, BOOL&) {
 	}
 
 	SetView(type);
+	m_App->GetUIUpdate()->UISetRadioMenuItem(id, ID_VIEW_TYPE_DETAILS, ID_VIEW_TYPE_TILES);
 
 	return 0;
 }
@@ -683,9 +686,7 @@ LRESULT CView::HandleNewIntValue(int size) {
 		if (!m_App->AddCommand(cmd))
 			m_App->ShowCommandError(L"Failed to create value");
 		else {
-			auto index = FindItem(dlg.GetName(), false, true);
-			ATLASSERT(index >= 0);
-			SelectItem(index);
+			SelectItem(static_cast<int>(m_Items.size()) - 1);
 		}
 	}
 
