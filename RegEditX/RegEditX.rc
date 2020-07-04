@@ -73,6 +73,9 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "&Rename\tF2",                 ID_EDIT_RENAME
         MENUITEM SEPARATOR
+        MENUITEM "Copy Key Name",               ID_TREE_COPYKEYNAME
+        MENUITEM "Copy Full Key Name",          ID_TREE_COPYFULLKEYNAME
+        MENUITEM SEPARATOR
         POPUP "&New"
         BEGIN
             MENUITEM "&Key",                        ID_NEW_KEY
@@ -95,6 +98,7 @@ BEGIN
         MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
         MENUITEM "Tree",                        ID_VIEW_TREEPANE
         MENUITEM "&Keys in List View",          ID_VIEW_KEYSINLISTVIEW
+        MENUITEM SEPARATOR
         POPUP "List View"
         BEGIN
             MENUITEM "&Details",                    ID_VIEW_TYPE_DETAILS
@@ -106,6 +110,11 @@ BEGIN
         MENUITEM "&Refresh\tF5",                ID_VIEW_REFRESH
         MENUITEM SEPARATOR
         MENUITEM "&Properties...\tAlt+Enter",   ID_EDIT_PROPERTIES
+    END
+    POPUP "&Search"
+    BEGIN
+        MENUITEM "&Find in View...",            ID_SEARCH_FINDINVIEW
+        MENUITEM "Fin&d...",                    ID_SEARCH_FIND
     END
     POPUP "&Options"
     BEGIN
@@ -140,6 +149,9 @@ BEGIN
         MENUITEM "Cu&t",                        ID_EDIT_CUT
         MENUITEM "&Paste",                      ID_EDIT_PASTE
         MENUITEM "&Delete",                     ID_EDIT_DELETE
+        MENUITEM SEPARATOR
+        MENUITEM "Copy Key Name",               ID_TREE_COPYKEYNAME
+        MENUITEM "Copy Full Key Name",          ID_TREE_COPYFULLKEYNAME
         MENUITEM SEPARATOR
         MENUITEM "&Rename",                     ID_EDIT_RENAME
         MENUITEM SEPARATOR
@@ -303,17 +315,17 @@ BEGIN
     PUSHBUTTON      "&Color...",IDC_COLOR,7,80,50,14
 END
 
-IDD_MULTISTRING DIALOGEX 0, 0, 310, 141
+IDD_MULTISTRING DIALOGEX 0, 0, 381, 164
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Edit Multi String Value"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    DEFPUSHBUTTON   "OK",IDOK,97,120,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,163,120,50,14
+    DEFPUSHBUTTON   "OK",IDOK,132,143,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,198,143,50,14
     LTEXT           "&Name:",IDC_STATIC,8,19,24,9
     EDITTEXT        IDC_NAME,37,17,217,16,ES_AUTOHSCROLL
     LTEXT           "&Value:",IDC_STATIC,8,42,24,9
-    EDITTEXT        IDC_VALUE,37,40,266,61,ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_WANTRETURN
+    EDITTEXT        IDC_VALUE,37,40,335,92,ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_WANTRETURN | WS_VSCROLL | WS_HSCROLL
 END
 
 IDD_STRINGVALUE DIALOGEX 0, 0, 310, 141
@@ -380,9 +392,9 @@ BEGIN
     IDD_MULTISTRING, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 303
+        RIGHTMARGIN, 374
         TOPMARGIN, 7
-        BOTTOMMARGIN, 134
+        BOTTOMMARGIN, 157
     END
 
     IDD_STRINGVALUE, DIALOG

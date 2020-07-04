@@ -17,6 +17,7 @@
 #include "BinaryValueDlg.h"
 #include <algorithm>
 #include "SortHelper.h"
+#include "ClipboardHelper.h"
 
 #pragma comment(lib, "ntdll")
 
@@ -333,6 +334,14 @@ LRESULT CView::OnFindItem(int, LPNMHDR hdr, BOOL&) {
 	}
 
 	return -1;
+}
+
+LRESULT CView::OnItemChanged(int, LPNMHDR, BOOL&) {
+	auto selected = GetSelectedCount();
+	auto ui = m_App->GetUIUpdate();
+	ui->UIEnable(ID_EDIT_COPY, selected >= 0);
+
+	return 0;
 }
 
 LRESULT CView::OnRightClick(int, LPNMHDR hdr, BOOL&) {
@@ -665,6 +674,20 @@ LRESULT CView::OnChangeViewType(WORD, WORD id, HWND, BOOL&) {
 
 	SetView(type);
 	m_App->GetUIUpdate()->UISetRadioMenuItem(id, ID_VIEW_TYPE_DETAILS, ID_VIEW_TYPE_TILES);
+
+	return 0;
+}
+
+LRESULT CView::OnEditCopy(WORD, WORD, HWND, BOOL&) {
+	auto index = GetSelectedIndex();
+	ATLASSERT(index >= 0);
+	CString item, text;
+	for (int i = 0; i < 5; i++) {
+		GetItemText(index, i, item);
+		if(!item.IsEmpty())
+			text += item + L", ";
+	}
+	ClipboardHelper::CopyText(*this, text.Left(text.GetLength() - 2));
 
 	return 0;
 }

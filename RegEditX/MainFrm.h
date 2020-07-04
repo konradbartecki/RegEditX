@@ -57,6 +57,8 @@ public:
 		COMMAND_ID_HANDLER(ID_EDIT_RENAME, OnEditRename)
 		COMMAND_ID_HANDLER(ID_EDIT_MODIFY, OnEditModify)
 		COMMAND_ID_HANDLER(ID_EDIT_PERMISSIONS, OnEditPermissions)
+		COMMAND_ID_HANDLER(ID_TREE_COPYKEYNAME, OnCopyKeyName)
+		COMMAND_ID_HANDLER(ID_TREE_COPYFULLKEYNAME, OnCopyFullKeyName)
 		NOTIFY_CODE_HANDLER(TVN_DELETEITEM, OnTreeDeleteItem)
 		NOTIFY_CODE_HANDLER(TVN_ENDLABELEDIT, OnEndRename)
 		NOTIFY_CODE_HANDLER(TVN_BEGINLABELEDIT, OnBeginRename)
@@ -102,6 +104,8 @@ private:
 	LRESULT OnViewTreePane(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/);
 	LRESULT OnTreePaneClose(WORD /*wNotifyCode*/, WORD /*wID*/, HWND hWndCtl, BOOL& /*bHandled*/);
 	LRESULT OnDelete(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/);
+	LRESULT OnCopyKeyName(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/);
+	LRESULT OnCopyFullKeyName(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/);
 
 public:
 	CCommandBarCtrl m_CmdBar;

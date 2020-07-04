@@ -27,6 +27,10 @@ RegistryManager::RegistryManager(CTreeViewCtrl& tree, CView& view) : _tree(tree)
 	_stdRegistryRoot->AddChild(_HKLM = new RegKeyTreeNode(HKEY_LOCAL_MACHINE, L"HKEY_LOCAL_MACHINE", HKEY_LOCAL_MACHINE));
 	_stdRegistryRoot->AddChild(_HKUsers = new RegKeyTreeNode(HKEY_USERS, L"HKEY_USERS", HKEY_USERS));
 	_stdRegistryRoot->AddChild(_HKCC = new RegKeyTreeNode(HKEY_CURRENT_CONFIG, L"HKEY_CURENT_CONFIG", HKEY_CURRENT_CONFIG));
+	_stdRegistryRoot->AddChild(_HKPD = new RegKeyTreeNode(HKEY_PERFORMANCE_DATA, L"HKEY_PERFORMANCE_DATA", HKEY_PERFORMANCE_DATA));
+	_stdRegistryRoot->AddChild(_HKPT = new RegKeyTreeNode(HKEY_PERFORMANCE_TEXT, L"HKEY_PERFORMANCE_TEXT", HKEY_PERFORMANCE_TEXT));
+	_stdRegistryRoot->AddChild(_HKPNT = new RegKeyTreeNode(HKEY_PERFORMANCE_NLSTEXT, L"HKEY_PERFORMANCE_NLSTEXT", HKEY_PERFORMANCE_NLSTEXT));
+	_stdRegistryRoot->AddChild(_HKCULS = new RegKeyTreeNode(HKEY_CURRENT_USER_LOCAL_SETTINGS, L"HKEY_CURRENT_USER_LOCAL_SETTINGS", HKEY_CURRENT_USER_LOCAL_SETTINGS));
 
 	BuildHiveList();
 
@@ -44,7 +48,7 @@ void RegistryManager::BuildHiveList() {
 	WCHAR data[512];
 	DWORD type;
 	for (DWORD i = 0; ; i++) {
-		DWORD len = 256, datalen = 512;
+		DWORD len = _countof(name), datalen = _countof(data);
 		if (ERROR_SUCCESS != ::RegEnumValue(key, i, name, &len, nullptr, &type, (BYTE*)& data, &datalen))
 			break;
 

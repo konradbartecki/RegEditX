@@ -4,14 +4,14 @@
 
 #include "stdafx.h"
 #include "resource.h"
-
-#include "aboutdlg.h"
+#include "AboutDlg.h"
 #include "View.h"
 #include "MainFrm.h"
 #include "CreateNewKeyCommand.h"
 #include "NewKeyDlg.h"
 #include "RenameKeyCommand.h"
 #include "SecurityInformation.h"
+#include "ClipboardHelper.h"
 
 BOOL CMainFrame::PreTranslateMessage(MSG* pMsg) {
 	if (m_view.PreTranslateMessage(pMsg))
@@ -347,6 +347,18 @@ LRESULT CMainFrame::OnRefresh(WORD, WORD, HWND, BOOL&) {
 	RegistryManager::Get().Refresh();
 	m_view.Update(m_SelectedNode, true);
 
+	return 0;
+}
+
+LRESULT CMainFrame::OnCopyKeyName(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/) {
+	ATLASSERT(m_SelectedNode);
+	ClipboardHelper::CopyText(*this, m_SelectedNode->GetText());
+	return 0;
+}
+
+LRESULT CMainFrame::OnCopyFullKeyName(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/) {
+	ATLASSERT(m_SelectedNode);
+	ClipboardHelper::CopyText(*this, m_SelectedNode->GetFullPath());
 	return 0;
 }
 

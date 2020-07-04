@@ -228,6 +228,7 @@
     <ClCompile Include="AboutDlg.cpp" />
     <ClCompile Include="AppCommandBase.cpp" />
     <ClCompile Include="BinaryValueDlg.cpp" />
+    <ClCompile Include="ClipboardHelper.cpp" />
     <ClCompile Include="DeleteKeyCommand.cpp" />
     <ClCompile Include="DialogHelper.cpp" />
     <ClCompile Include="MultiStringValueDlg.cpp" />
@@ -262,6 +263,7 @@
     <ClInclude Include="AppContext.h" />
     <ClInclude Include="BinaryValueDlg.h" />
     <ClInclude Include="ChangeValueCommand.h" />
+    <ClInclude Include="ClipboardHelper.h" />
     <ClInclude Include="CreateNewValueCommand.h" />
     <ClInclude Include="DeleteKeyCommand.h" />
     <ClInclude Include="DialogHelper.h" />

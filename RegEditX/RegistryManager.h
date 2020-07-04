@@ -65,6 +65,10 @@ private:
 	RegKeyTreeNode* _HKCU;
 	RegKeyTreeNode* _HKUsers;
 	RegKeyTreeNode* _HKCC;
+	RegKeyTreeNode* _HKPT;
+	RegKeyTreeNode* _HKPD;
+	RegKeyTreeNode* _HKCULS;
+	RegKeyTreeNode* _HKPNT;
 
 	CAtlMap<CString, CString> _hiveList;
 

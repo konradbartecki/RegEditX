@@ -40,7 +40,6 @@
 #define IDI_LIST                        242
 #define IDI_TILES                       243
 #define IDI_VIEW                        244
-#define IDI_ICON1                       245
 #define IDI_ADD                         245
 #define IDC_NAME                        1000
 #define IDC_VALUE                       1001
@@ -77,13 +76,17 @@
 #define ID_VIEW_TYPE_TILES              32798
 #define ID_EDIT_PERMISSIONS             32799
 #define ID_FILE_CONNECTTOCOMPUTER       32800
+#define ID_TREE_COPYKEYNAME             32801
+#define ID_TREE_COPYFULLKEYNAME         32802
+#define ID_SEARCH_FINDINVIEW            32803
+#define ID_SEARCH_FIND                  32804
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        246
-#define _APS_NEXT_COMMAND_VALUE         32801
+#define _APS_NEXT_COMMAND_VALUE         32805
 #define _APS_NEXT_CONTROL_VALUE         1012
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
