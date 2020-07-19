@@ -49,6 +49,8 @@ int CView::GetRegTypeIcon(DWORD type) {
 		case REG_MULTI_SZ:
 		case REG_EXPAND_SZ:
 			return 2;
+		case REG_LINK:
+			return 8;
 	}
 	return 3;
 }
@@ -82,6 +84,10 @@ CString CView::GetDataAsString(const ListItem& item) const {
 		case REG_EXPAND_SZ:
 			text.Preallocate(size + 1);
 			status = regNode->GetKey()->QueryStringValue(item.ValueName, text.GetBuffer(), &size);
+			break;
+
+		case REG_LINK:
+			text = regNode->GetLinkPath();
 			break;
 
 		case REG_MULTI_SZ:
@@ -241,6 +247,14 @@ void CView::Update(TreeNodeBase* node, bool ifTheSame) {
 				item.ValueName = valuename;
 				item.ValueType = valueType;
 				item.ValueSize = size;
+				m_Items.push_back(item);
+			}
+			if (!trueNode->GetLinkPath().IsEmpty()) {
+				// add link path
+				ListItem item;
+				item.ValueName = L"SymbolicLinkName";
+				item.ValueType = REG_LINK;
+				item.ValueSize = trueNode->GetLinkPath().GetLength() * sizeof(WCHAR);
 				m_Items.push_back(item);
 			}
 		}

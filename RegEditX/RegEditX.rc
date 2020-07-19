@@ -271,6 +271,10 @@ IDI_VIEW                ICON                    "res\\view.ico"
 
 IDI_ADD                 ICON                    "res\\button-add.ico"
 
+IDI_FOLDER_LINK         ICON                    "res\\folder-link.ico"
+
+IDI_LINK                ICON                    "res\\link.ico"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -283,7 +287,7 @@ CAPTION "About Registry Editor X"
 FONT 9, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "OK",IDOK,68,68,50,14
-    CTEXT           "Registry Editor X v0.3\n\n(C)2019-2020 Pavel Yosifovich",IDC_STATIC,32,20,121,32
+    CTEXT           "Registry Editor X v0.4\n\n(C)2019-2020 Pavel Yosifovich",IDC_STATIC,32,20,121,32
     ICON            IDR_MAINFRAME,IDC_STATIC,7,7,20,20
 END
 
@@ -444,8 +448,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 0,3,0,0
- PRODUCTVERSION 0,3,0,0
+ FILEVERSION 0,4,0,0
+ PRODUCTVERSION 0,4,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -461,12 +465,12 @@ BEGIN
         BLOCK "040904b0"
         BEGIN
             VALUE "FileDescription", "Registry Editor X"
-            VALUE "FileVersion", "0.3.0.0"
+            VALUE "FileVersion", "0.4.0.0"
             VALUE "InternalName", "RegEditX"
             VALUE "LegalCopyright", "Copyright 2019-2020 Pavel Yosifovich"
             VALUE "OriginalFilename", "RegEditX.exe"
             VALUE "ProductName", "Registry Editor X"
-            VALUE "ProductVersion", "0.3.0.0"
+            VALUE "ProductVersion", "0.4.0.0"
         END
     END
     BLOCK "VarFileInfo"
@@ -524,7 +528,7 @@ END
 
 STRINGTABLE
 BEGIN
-    IDR_MAINFRAME           "Registry Editor X v0.3"
+    IDR_MAINFRAME           "Registry Editor X v0.4"
 END
 
 STRINGTABLE

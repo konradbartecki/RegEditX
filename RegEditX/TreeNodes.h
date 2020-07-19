@@ -4,7 +4,8 @@
 
 class RegKeyTreeNode : public TreeNodeBase {
 public:
-	RegKeyTreeNode(HKEY hive, const CString& text, HKEY hKey) : TreeNodeBase(text, nullptr), _key(hKey), _root(hive) {}
+	RegKeyTreeNode(HKEY hive, const CString& text, HKEY hKey) : TreeNodeBase(text, nullptr), _key(hKey), _root(hive) {
+	}
 
 	virtual TreeNodeType GetNodeType() const {
 		return TreeNodeType::RegistryKey;
@@ -19,11 +20,24 @@ public:
 	bool HasChildren() const override;
 	bool CanDelete() const override;
 
+	void SetLink(PCWSTR path) {
+		_link = true;
+		_linkPath = path;
+	}
+
+	const CString& GetLinkPath() const {
+		return _linkPath;
+	}
+
 	int GetImage() const override {
+		if (_link)
+			return 7;
 		return _hive ? 4 : 0;
 	}
 
 	int GetSelectedImage() const override {
+		if (_link)
+			return 7;
 		return _hive ? 4 : 1;
 	}
 
@@ -41,8 +55,10 @@ public:
 
 private:
 	mutable CRegKey _key;
+	CString _linkPath;
 	HKEY _root;
-	bool _expanded{ false };
-	bool _hive{ false };
+	bool _expanded : 1 { false };
+	bool _hive : 1 { false };
+	bool _link : 1 {false };
 };
 

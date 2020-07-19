@@ -146,7 +146,7 @@ LRESULT CMainFrame::OnCreate(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/
 
 	UINT icons[] = {
 		IDI_FOLDER_CLOSED, IDI_FOLDER_OPEN, IDI_TEXT, IDI_BINARY,
-		IDI_HIVE, IDI_UP, IDI_LAPTOP
+		IDI_HIVE, IDI_UP, IDI_LAPTOP, IDI_FOLDER_LINK, IDI_LINK
 	};
 
 	for (auto id : icons) {

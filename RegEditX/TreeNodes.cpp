@@ -5,7 +5,8 @@
 bool RegKeyTreeNode::Expand(bool expand) {
 	if (expand && GetChildNodes().empty()) {
 		if (_key) {
-			WCHAR name[128];
+			WCHAR linkPath[257];
+			WCHAR name[256];
 			DWORD len;
 			FILETIME lastWrite;
 			for (DWORD index = 0; ; index++) {
@@ -17,9 +18,25 @@ bool RegKeyTreeNode::Expand(bool expand) {
 					continue;
 
 				CRegKey key;
-				key.Open(_key.m_hKey, name, KEY_QUERY_VALUE | KEY_ENUMERATE_SUB_KEYS);
-				auto node = new RegKeyTreeNode(_root, name, key.Detach());
-				AddChild(node);
+				auto error = key.Open(_key.m_hKey, name, KEY_QUERY_VALUE | KEY_ENUMERATE_SUB_KEYS);
+				if (error == ERROR_SUCCESS) {
+					bool link = false;
+					CRegKey hLinkKey;
+					error = ::RegOpenKeyExW(_key.m_hKey, name, REG_OPTION_OPEN_LINK, KEY_READ, &hLinkKey.m_hKey);
+					if (error == ERROR_SUCCESS) {
+						DWORD type = 0;
+						DWORD size = sizeof(linkPath) - sizeof(WCHAR);
+						auto error = ::RegQueryValueEx(hLinkKey, L"SymbolicLinkValue", nullptr, &type, (BYTE*)linkPath, &size);
+						link = type == REG_LINK;
+						if (link)
+							linkPath[size / sizeof(WCHAR)] = L'\0';
+					}
+
+					auto node = new RegKeyTreeNode(_root, name, key.Detach());
+					if(link)
+						node->SetLink(linkPath);
+					AddChild(node);
+				}
 			}
 			_expanded = true;
 		}

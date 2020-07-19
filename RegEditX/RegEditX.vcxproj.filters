@@ -309,6 +309,12 @@
     <Image Include="res\button-add.ico">
       <Filter>Resource Files\Icons</Filter>
     </Image>
+    <Image Include="res\folder-link.ico">
+      <Filter>Resource Files\Icons</Filter>
+    </Image>
+    <Image Include="res\link.ico">
+      <Filter>Resource Files\Icons</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

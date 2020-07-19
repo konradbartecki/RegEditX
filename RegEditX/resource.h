@@ -41,6 +41,9 @@
 #define IDI_TILES                       243
 #define IDI_VIEW                        244
 #define IDI_ADD                         245
+#define IDI_FOLDER_LINK                 246
+#define IDI_ICON1                       247
+#define IDI_LINK                        247
 #define IDC_NAME                        1000
 #define IDC_VALUE                       1001
 #define IDC_HEX                         1002
@@ -85,7 +88,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        246
+#define _APS_NEXT_RESOURCE_VALUE        248
 #define _APS_NEXT_COMMAND_VALUE         32805
 #define _APS_NEXT_CONTROL_VALUE         1012
 #define _APS_NEXT_SYMED_VALUE           101

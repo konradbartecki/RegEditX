@@ -75,6 +75,7 @@ void RegistryManager::BuildTreeView() {
 		}
 	}
 	_tree.Expand(hRootNode, TVE_EXPAND);
+	_tree.Expand(roots[0]->GetHItem(), TVE_EXPAND);
 	_tree.Expand(roots[1]->GetHItem(), TVE_EXPAND);
 	_tree.SelectItem(_stdRegistryRoot->GetHItem());
 }
