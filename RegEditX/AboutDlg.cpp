@@ -18,3 +18,9 @@ LRESULT CAboutDlg::OnCloseCmd(WORD /*wNotifyCode*/, WORD wID, HWND /*hWndCtl*/, 
 	EndDialog(wID);
 	return 0;
 }
+
+LRESULT CAboutDlg::OnClickSyslink(int, LPNMHDR, BOOL&) {
+	::ShellExecute(nullptr, L"open", L"https://github.com/zodiacon/regeditx", nullptr, nullptr, SW_SHOWDEFAULT);
+
+	return 0;
+}

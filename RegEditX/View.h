@@ -61,11 +61,12 @@ public:
 		CHAIN_MSG_MAP_ALT(CVirtualListView<CView>, 1)
 		DEFAULT_REFLECTION_HANDLER()
 	ALT_MSG_MAP(1)
+		COMMAND_ID_HANDLER(ID_VIEW_LISTFONT, OnListFont)
 		COMMAND_ID_HANDLER(ID_EDIT_DELETE, OnDelete)
 		COMMAND_ID_HANDLER(ID_EDIT_RENAME, OnEditRename)
 		COMMAND_ID_HANDLER(ID_EDIT_MODIFYVALUE, OnModifyValue)
 		COMMAND_ID_HANDLER(ID_EDIT_COPY, OnEditCopy)
-		ALT_MSG_MAP(2)
+	ALT_MSG_MAP(2)
 		COMMAND_ID_HANDLER(ID_VIEW_KEYSINLISTVIEW, OnViewKeys)
 		COMMAND_ID_HANDLER(ID_NEW_DWORDVALUE, OnNewDwordValue)
 		COMMAND_ID_HANDLER(ID_NEW_QWORDVALUE, OnNewQwordValue)
@@ -97,6 +98,7 @@ private:
 	LRESULT OnViewKeys(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/);
 	LRESULT OnChangeViewType(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/);
 	LRESULT OnEditCopy(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/);
+	LRESULT OnListFont(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/);
 
 	LRESULT HandleNewIntValue(int size);
 	LRESULT HandleNewStringValue(DWORD type);
@@ -115,5 +117,6 @@ private:
 	ITreeOperations* m_TreeOperations;
 	IMainApp* m_App;
 	std::vector<ListItem> m_Items;
+	CFont m_Font;
 	bool m_ViewKeys{ true };
 };

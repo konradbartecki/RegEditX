@@ -706,6 +706,20 @@ LRESULT CView::OnEditCopy(WORD, WORD, HWND, BOOL&) {
 	return 0;
 }
 
+LRESULT CView::OnListFont(WORD, WORD, HWND, BOOL&) {
+	LOGFONT lf;
+	::GetObject(GetFont(), sizeof(lf), &lf);
+	CFontDialog dlg(&lf);
+	if (dlg.DoModal() == IDOK) {
+		if (m_Font)
+			m_Font.DeleteObject();
+		m_Font.CreateFontIndirect(&lf);
+		SetFont(m_Font);
+	}
+
+	return 0;
+}
+
 LRESULT CView::HandleNewIntValue(int size) {
 	ATLASSERT(size == 4 || size == 8);
 
@@ -776,7 +790,7 @@ const CString& ListItem::GetName() const {
 				Name = TreeNode->GetText();
 		}
 		else
-			Name = *ValueName == L'\0' ? L"(Default)" : ValueName;
+			Name = ValueName.IsEmpty() ? CString(L"(Default)") : ValueName;
 	}
 	return Name;
 }

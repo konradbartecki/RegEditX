@@ -40,8 +40,8 @@ void CMainFrame::UpdateUI() {
 	UIEnable(ID_EDIT_CUT, canDelete);
 	UIEnable(ID_EDIT_PASTE, m_AllowModify && CanPaste());
 	UIEnable(ID_NEW_KEY, m_AllowModify && m_SelectedNode->GetNodeType() == TreeNodeType::RegistryKey);
-	UISetText(ID_EDIT_UNDO, (m_CmdMgr.CanUndo() ? L"Undo " + m_CmdMgr.GetUndoCommand()->GetName() : L"Undo") + CString(L"\tCtrl+Z"));
-	UISetText(ID_EDIT_REDO, (m_CmdMgr.CanRedo() ? L"Redo " + m_CmdMgr.GetRedoCommand()->GetName() : L"Redo") + CString(L"\tCtrl+Y"));
+	UISetText(ID_EDIT_UNDO, (m_CmdMgr.CanUndo() ? L"Undo " + m_CmdMgr.GetUndoCommand()->GetName() : CString(L"Undo")) + CString(L"\tCtrl+Z"));
+	UISetText(ID_EDIT_REDO, (m_CmdMgr.CanRedo() ? L"Redo " + m_CmdMgr.GetRedoCommand()->GetName() : CString(L"Redo")) + CString(L"\tCtrl+Y"));
 	UIEnable(ID_EDIT_RENAME, m_AllowModify && canDelete);
 	UISetCheck(ID_EDIT_MODIFY, !m_AllowModify);
 	UISetCheck(ID_VIEW_KEYSINLISTVIEW, m_view.IsViewKeys());
@@ -239,7 +239,8 @@ LRESULT CMainFrame::OnFileExit(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCt
 LRESULT CMainFrame::OnAlwaysOnTop(WORD, WORD, HWND, BOOL&) {
 	auto style = GetWindowLongPtr(GWL_EXSTYLE);
 	bool topmost = (style & WS_EX_TOPMOST) == 0;
-	SetWindowPos(topmost ? HWND_TOPMOST : HWND_NOTOPMOST, &RECT(), SWP_NOREPOSITION | SWP_NOREDRAW | SWP_NOSIZE | SWP_NOMOVE);
+	RECT dummy;
+	SetWindowPos(topmost ? HWND_TOPMOST : HWND_NOTOPMOST, &dummy, SWP_NOREPOSITION | SWP_NOREDRAW | SWP_NOSIZE | SWP_NOMOVE);
 
 	UISetCheck(ID_OPTIONS_ALWAYSONTOP, topmost);
 	return 0;
