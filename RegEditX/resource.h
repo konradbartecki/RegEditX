@@ -55,6 +55,8 @@
 #define IDC_BUTTON1                     1011
 #define IDC_SYSLINK1                    1012
 #define IDC_LINK                        1012
+#define IDC_LINK3                       1012
+#define IDC_LINK2                       1013
 #define ID_VIEW_TREEPANE                32774
 #define ID_OPTIONS_ALWAYSONTOP          32775
 #define ID_VIEW_TREEFONT                32776

@@ -289,8 +289,10 @@ BEGIN
     DEFPUSHBUTTON   "OK",IDOK,68,86,50,14
     CTEXT           "Registry Editor X v0.4\n\n(C)2019-2020 Pavel Yosifovich",IDC_STATIC,32,20,121,32
     ICON            IDR_MAINFRAME,IDC_STATIC,7,7,20,20,SS_CENTERIMAGE
-    CONTROL         "<a>https://github.com/zodiacon/regeditx</a>",IDC_LINK,
-                    "SysLink",WS_TABSTOP,33,54,120,14
+    CONTROL         "<a>https://github.com/konradbartecki/regeditx</a>",IDC_LINK3,
+                    "SysLink",WS_TABSTOP,24,65,139,11
+    CONTROL         "<a>https://github.com/zodiacon/regeditx</a>",IDC_LINK2,
+                    "SysLink",WS_TABSTOP,33,51,120,11
 END
 
 IDD_NEWKEY DIALOGEX 0, 0, 243, 72

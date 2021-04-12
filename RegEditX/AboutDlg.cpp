@@ -19,8 +19,13 @@ LRESULT CAboutDlg::OnCloseCmd(WORD /*wNotifyCode*/, WORD wID, HWND /*hWndCtl*/, 
 	return 0;
 }
 
-LRESULT CAboutDlg::OnClickSyslink(int, LPNMHDR, BOOL&) {
-	::ShellExecute(nullptr, L"open", L"https://github.com/zodiacon/regeditx", nullptr, nullptr, SW_SHOWDEFAULT);
+LRESULT CAboutDlg::OnClickSyslink(int ctrlId, LPNMHDR, BOOL&) {
+	if (ctrlId == IDC_LINK3){
+		::ShellExecute(nullptr, L"open", L"https://github.com/konradbartecki/regeditx", nullptr, nullptr, SW_SHOWDEFAULT);
+	}
+	else {
+		::ShellExecute(nullptr, L"open", L"https://github.com/zodiacon/regeditx", nullptr, nullptr, SW_SHOWDEFAULT);
+	}
 
 	return 0;
 }
